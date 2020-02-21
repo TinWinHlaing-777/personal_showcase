@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{page_title}}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    {% load static %}
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'external.css' %}"> -->
+</head>
+
+<body>
+    <nav class="navbar navbar-light bg-light justify-content-between">
+        <a class="navbar-brand">Personal Product Showcase</a>
+        <form class="form-inline">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </nav>
+    <div class='container-fluid'>
+
+        <div class="container">
+            <div class="row" id="root">
+                <div class="col-3">
+                    <product-image url="{{product.image.url}}" title="{{product.title}}"></product-image>
+                </div>
+                <div class="col-6">
+
+                    <product-detail name="{{product.name}}" description="{{product.description}}"
+                        price="{{product.price}}">
+                    </product-detail>
+
+
+                    <form method="POST" action="/cart/">
+                        {% csrf_token %}
+                        <input type="hidden" name="product_id" value="{{product.id}}" />
+                        <button type="submit" class="btn btn-primary">Add to Cart</button>
+                    </form>
+                </div>
+                <div class="col-3">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        Vue.component('product-image', {
+            template: '<img v-bind:src="url" class="img-fluid" v-bind:alt="title" />',
+            props: ['url', 'title']
+        });
+
+        Vue.component('product-detail', {
+            template: `
+                <div><h5 class="card-title" v-text="name"></h5>
+                    <p class="card-text" v-text="description">
+                        
+                    </p>
+                    <p>
+                        Price : <span v-text="price"></span> USD
+                        </p>
+                    <p>
+                        Qty <input type="number" v-model="qty"> <br />                        
+                    </p>
+                    <p>
+                        Total Cost <br /> <span v-text="total"></span> US$
+                    </p></div>
+            `,
+            props: ['price', 'description', 'name'],
+            data() {
+                return {
+                    qty: 1
+                };
+            },
+            computed : {
+                total() {
+                    return this.price * this.qty
+                }
+            }
+        })
+
+        Vue.component('my-component-name', {
+            template: '<div>This <span>is<span> a template</div>'
+        });
+
+        const app = new Vue({
+            delimiters: ['[[', ']]'],
+            el: '#root',
+            data: {
+                qty: 1,
+                price: 4000
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{page_title}}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'external.css' %}">
+</head>
+
+<body>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Product</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Home</li>
+        </ol>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-2">
+                <a href="/product/create" class='btn btn-primary'>Create a new Product</a>
+            </div>
+            <div class="col-10">
+                <div class="row">
+                    {% for cart in cart %}
+                    <div class='col-3'>
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{cart.product.name}}</h5>
+                                <p class="card-text">{{cart.qty}}</p>
+                                <br><br>
+                                <p>{{cart.qty * cart.product.price}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // const button = document.getElementById('toggle');
+
+        const button = document.querySelector('#toggle');
+        const div2 = document.querySelector('#div2');
+        const div1 = document.querySelector('#div1');
+
+
+        button.addEventListener('click', function () {
+            
+            if(div2.style.display == 'none'){
+                div2.style.display = '';
+                div1.style.display = 'none';
+            }
+            else{
+                div2.style.display = 'none';
+                div1.style.display = '';
+            }
+            
+        });
+    </script>
+</body>
+
+</html>

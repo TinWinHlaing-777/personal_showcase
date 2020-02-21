@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{page_title}}</title>
+    
+   {% load static %}
+
+   <link rel="stylesheet" type="text/css" href="{% static 'external.css' %}">
+   <style>
+   
+   </style>
+</head>
+
+<body>
+    <h1 style="font-size: 5em;">Create a new awesome Product</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="name">
+            Name :
+        </label>
+        <input id="name" type="text" name="name" />
+        <br />
+        <label for="description">Description : </label>
+        <input id="description" type="text" name="description" />
+        <br />
+        <label for="category">Category : </label>
+        <input id="category" type="email" name="category" />
+        <br />
+        <button>Save Product</button>
+        <button type="reset">Clear</button>
+    </form>
+</body>
+
+</html>
